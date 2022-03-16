@@ -1,7 +1,6 @@
 import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
 import './App.css';
+import { SchoolsData } from './features/schools/schoolsData/schoolsData';
 
 function App() {
   const [darkMode, setDarkMode] = React.useState(getInitialMode());
@@ -11,11 +10,12 @@ function App() {
 
   function getInitialMode() {
     const isReturningUser = "dark" in localStorage;
-    var saveDarkMode: string | null = localStorage.getItem("dark");
-    const savedMode = JSON.parse(saveDarkMode != null ? saveDarkMode : "");
     const userPrefersDark = getPrefColorScheme();
+
     // if mode was saved --> dark / light
     if (isReturningUser) {
+      var saveDarkMode: string | null = localStorage.getItem("dark");
+      const savedMode = JSON.parse(saveDarkMode != null ? saveDarkMode : "");
       return savedMode;
       // if preferred color scheme is dark --> dark
     } else if (userPrefersDark) {
@@ -55,57 +55,9 @@ function App() {
         </div>
       </nav>
       <main>
-        <h1>{darkMode ? "Dark Mode" : "Light Mode"}</h1>
-        <h2>Toggle the switch to see some magic happen!</h2>
+        <SchoolsData />
       </main>
     </div>
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <Counter />
-    //     <p>
-    //       Edit <code>src/App.tsx</code> and save to reload.
-    //     </p>
-    //     <span>
-    //       <span>Learn </span>
-    //       <a
-    //         className="App-link"
-    //         href="https://reactjs.org/"
-    //         target="_blank"
-    //         rel="noopener noreferrer"
-    //       >
-    //         React
-    //       </a>
-    //       <span>, </span>
-    //       <a
-    //         className="App-link"
-    //         href="https://redux.js.org/"
-    //         target="_blank"
-    //         rel="noopener noreferrer"
-    //       >
-    //         Redux
-    //       </a>
-    //       <span>, </span>
-    //       <a
-    //         className="App-link"
-    //         href="https://redux-toolkit.js.org/"
-    //         target="_blank"
-    //         rel="noopener noreferrer"
-    //       >
-    //         Redux Toolkit
-    //       </a>
-    //       ,<span> and </span>
-    //       <a
-    //         className="App-link"
-    //         href="https://react-redux.js.org/"
-    //         target="_blank"
-    //         rel="noopener noreferrer"
-    //       >
-    //         React Redux
-    //       </a>
-    //     </span>
-    //   </header>
-    // </div>
   );
 }
 

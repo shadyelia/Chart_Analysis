@@ -1,5 +1,5 @@
 export interface ISchoolData {
-    school: ISchoolDetails[];
+    schools: ISchoolDetails[];
 }
 
 export interface ISchoolDetails {
