@@ -37,3 +37,11 @@
     transform: translateY(0px);
   }
 }
+
+.toggle-container .title{
+  float: left;
+}
+
+.toggle-container .toggle {
+  float: left;
+}
