@@ -3,6 +3,8 @@ import "./App.css";
 import { SchoolsData } from "./features/schools/schoolsData/schoolsData";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { SchoolsDetails } from "./features/schools/schoolDetails/schoolDetails";
+import Header from "./features/header/header";
+import Footer from "./features/footer/footer"
 
 function App() {
   const [darkMode, setDarkMode] = React.useState(getInitialMode());
@@ -60,11 +62,13 @@ function App() {
     //   <SchoolsData />
     // </div>
     <div>
+      <Header />
       <Routes>
         <Route path="/" element={<Navigate replace to="/home" />} />
         <Route path="/home" element={<SchoolsData />} />
         <Route path="/schoolDetails" element={<SchoolsDetails />} />
       </Routes>
+      <Footer />
     </div>
   );
 }

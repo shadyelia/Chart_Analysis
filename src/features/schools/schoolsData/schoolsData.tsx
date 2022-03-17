@@ -23,7 +23,6 @@ import Select from "@mui/material/Select";
 import * as Utils from "../../../common/utils";
 import { Line } from "react-chartjs-2";
 import { useNavigate } from "react-router-dom";
-
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -178,9 +177,10 @@ export function SchoolsData() {
         <div>
             {postStatus === "loading" && <CircularProgress />}
             {postStatus === "succeeded" && (
-                <div>
-                    <h3 className="coloredH3">Number of Lessons</h3>
-                    <Grid container spacing={3}>
+                <div className="mainDev">
+                    <h1 className="coloredHeader">Chart Analysis</h1>
+                    <h2 className="coloredHeader">Number of Lessons</h2>
+                    <Grid container spacing={3} className="paddingBottom15" >
                         <Grid item xs>
                             <div className="form-inline">
                                 <span>Select Country</span>
@@ -251,7 +251,7 @@ export function SchoolsData() {
                         </Grid>
                     </Grid>
 
-                    <Card sx={{ maxWidth: 1600 }}>
+                    <Card sx={{ maxWidth: 1800 }}>
                         <CardContent>
                             <Grid container spacing={2}>
                                 <Grid item xs={8}>
@@ -262,16 +262,19 @@ export function SchoolsData() {
                                     />
                                 </Grid>
                                 <Grid item xs={4}>
-                                    {selectedSchool == "All" && (
-                                        <span>
-                                            {filteredData.totallessons} in {selectedCamp}{" "}
-                                        </span>
-                                    )}
-                                    {selectedSchool != "All" && (
-                                        <span>
-                                            {filteredData.totallessons} in {selectedSchool}{" "}
-                                        </span>
-                                    )}
+                                    <div>
+                                        <h2>{filteredData.totallessons} Sessions </h2>
+                                        {selectedSchool == "All" && (
+                                            <span>
+                                                in {selectedCamp}{" "}
+                                            </span>
+                                        )}
+                                        {selectedSchool != "All" && (
+                                            <span>
+                                                in {selectedSchool}{" "}
+                                            </span>
+                                        )}
+                                    </div>
                                     {chartDataSets &&
                                         chartDataSets.length > 0 &&
                                         chartDataSets.map((item) => {

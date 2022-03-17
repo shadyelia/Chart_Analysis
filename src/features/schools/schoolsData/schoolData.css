@@ -1,3 +1,8 @@
+.mainDev {
+  padding-left: 24px;
+  padding: 25px;
+}
+
 .form-inline {
   display: flex;
   align-items: center;
@@ -7,10 +12,14 @@ label {
   margin: 0;
 }
 
-.coloredH3 {
+.coloredHeader {
   color: #8a5ea9;
 }
 
-.unChecked{
-  opacity : 0.35;
+.unChecked {
+  opacity: 0.35;
+}
+
+.paddingBottom15{
+  padding-bottom: 15px;
 }
