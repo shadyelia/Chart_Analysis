@@ -18,7 +18,7 @@ export interface CounterState {
 
 const initialState: CounterState = {
   fullData: {} as ISchoolData,
-  filteredSchools: {} as ISchoolData,
+  filteredSchools: { schools: [], totallessons: 0 } as ISchoolData,
   selectedSchoolDetails: {} as ISchoolDetails,
   countries: [],
   selectedCountry: "",
@@ -40,25 +40,59 @@ export const schoolsSlice = createSlice({
   initialState,
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
-    selectCountry: (state, action: PayloadAction<string>) => {
+    setCountry: (state, action: PayloadAction<string>) => {
+      var campsArray = getCampsByCounter(
+        state.fullData.schools.filter((item) => item.country == action.payload)
+      );
+      var schoolsArray = getSchoolsByCamp(
+        state.fullData.schools.filter((item) => item.camp == campsArray[0])
+      );
+      let filteredSchoolsData = updateFilteredSchool(
+        state.fullData.schools,
+        action.payload,
+        campsArray[0]
+      );
       return {
         ...state,
+        camps: campsArray,
+        selectedCamp: campsArray[0],
+        schools: schoolsArray,
+        selectedSchool: schoolsArray[0],
         selectedCountry: action.payload,
+        filteredSchools:filteredSchoolsData
       };
     },
-    selectCamp: (state, action: PayloadAction<string>) => {
+    setCamp: (state, action: PayloadAction<string>) => {
+      var schoolsArray = getSchoolsByCamp(
+        state.fullData.schools.filter((item) => item.camp == action.payload)
+      );
+      let filteredSchoolsData = updateFilteredSchool(
+        state.fullData.schools,
+        state.selectedCountry,
+        action.payload
+      );
       return {
         ...state,
         selectedCamp: action.payload,
+        schools: schoolsArray,
+        selectedSchool: schoolsArray[0],
+        filteredSchools:filteredSchoolsData
       };
     },
-    selectSchool: (state, action: PayloadAction<string>) => {
+    setSchool: (state, action: PayloadAction<string>) => {
+      let filteredSchoolsData = updateFilteredSchool(
+        state.fullData.schools,
+        state.selectedCountry,
+        state.selectedCamp,
+        action.payload
+      );
       return {
         ...state,
         selectedSchool: action.payload,
+        filteredSchools:filteredSchoolsData
       };
     },
-    putSchool: (state, action: PayloadAction<ISchoolDetails>) => {
+    setSchoolDetails: (state, action: PayloadAction<ISchoolDetails>) => {
       return {
         ...state,
         selectedSchoolDetails: action.payload,
@@ -84,48 +118,83 @@ export const schoolsSlice = createSlice({
         var fullData = {} as ISchoolData;
         fullData.schools = data as ISchoolDetails[];
         let countries = new Set<string>();
-        let camps = new Set<string>();
-        let schools = new Set<string>();
 
         fullData.schools.forEach((school: ISchoolDetails) => {
           if (!countries.has(school.country)) countries.add(school.country);
-          if (!camps.has(school.camp)) camps.add(school.camp);
-          if (!schools.has(school.school)) schools.add(school.school);
         });
 
         var countriesArray = Array.from(countries);
-        var campsArray = Array.from(camps);
-        var schoolsArray = ["All"].concat(Array.from(schools));
+        var campsArray = getCampsByCounter(
+          fullData.schools.filter((item) => item.country == countriesArray[0])
+        );
+        var schoolsArray = getSchoolsByCamp(
+          fullData.schools.filter((item) => item.camp == campsArray[0])
+        );
+        let filteredSchoolsData = updateFilteredSchool(
+          fullData.schools,
+          countriesArray[0],
+          campsArray[0]
+        );
 
-        let filteredSchoolsData: ISchoolDetails[] = [];
-        fullData.schools.forEach((school: ISchoolDetails) => {
-          if (
-            school.country == countriesArray[0] &&
-            school.camp == campsArray[0]
-          )
-            filteredSchoolsData.push(school);
-        });
-        var filteredSchools = {} as ISchoolData;
-        filteredSchools.schools = filteredSchoolsData;
         return {
           ...state,
           status: "succeeded",
           fullData: fullData,
           countries: countriesArray,
-          selectedCountry: countriesArray.length > 0 ? countriesArray[0] : "",
+          selectedCountry: countriesArray[0],
           camps: campsArray,
-          selectedCamp: campsArray.length > 0 ? campsArray[0] : "",
+          selectedCamp: campsArray[0],
           schools: schoolsArray,
           selectedSchool: schoolsArray[0],
-          filteredSchools: filteredSchools,
+          filteredSchools: filteredSchoolsData,
         };
       });
   },
 });
 
-export const { selectCountry, selectCamp, selectSchool, putSchool } =
+const getCampsByCounter = (data: ISchoolDetails[]) => {
+  let camps = new Set<string>();
+  data.forEach((school: ISchoolDetails) => {
+    if (!camps.has(school.camp)) camps.add(school.camp);
+  });
+  return Array.from(camps);
+};
+
+const getSchoolsByCamp = (data: ISchoolDetails[]) => {
+  let schools = new Set<string>();
+  data.forEach((school: ISchoolDetails) => {
+    if (!schools.has(school.school)) schools.add(school.school);
+  });
+  return ["All"].concat(Array.from(schools));
+};
+
+const updateFilteredSchool = (
+  data: ISchoolDetails[],
+  selectedCountry: string,
+  selectedCamp: string,
+  selectedSchool: string = "All"
+) => {
+  let filteredSchoolsData = { schools: [], totallessons: 0 } as ISchoolData;
+  data.forEach((school: ISchoolDetails) => {
+    if (
+      school.country == selectedCountry &&
+      school.camp == selectedCamp &&
+      (selectedSchool == "All" || school.school == selectedSchool)
+    ) {
+      filteredSchoolsData.schools.push(school);
+      filteredSchoolsData.totallessons += school.lessons;
+    }
+  });
+  return filteredSchoolsData;
+};
+
+export const { setCountry, setCamp, setSchool, setSchoolDetails } =
   schoolsSlice.actions;
 
-export const selectData = (state: RootState) => state.schools;
+export const getSelectedCountry = (state: RootState) =>
+  state.schools.selectedCountry;
+export const getSelectedCamp = (state: RootState) => state.schools.selectedCamp;
+export const getSelectedSchool = (state: RootState) =>
+  state.schools.selectedSchool;
 
 export default schoolsSlice.reducer;

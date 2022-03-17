@@ -1,6 +1,6 @@
-import React from 'react';
-import './App.css';
-import { SchoolsData } from './features/schools/schoolsData/schoolsData';
+import React from "react";
+import "./App.css";
+import { SchoolsData } from "./features/schools/schoolsData/schoolsData";
 
 function App() {
   const [darkMode, setDarkMode] = React.useState(getInitialMode());
@@ -37,7 +37,7 @@ function App() {
     <div className={darkMode ? "dark-mode" : "light-mode"}>
       <nav>
         <div className="toggle-container">
-          <span className='title'>Analysis Chart</span>
+          <span className="title">Analysis Chart</span>
           <span className="toggle">
             <input
               checked={darkMode}
@@ -54,9 +54,8 @@ function App() {
         </button> */}
         </div>
       </nav>
-      <main>
-        <SchoolsData />
-      </main>
+
+      <SchoolsData />
     </div>
   );
 }

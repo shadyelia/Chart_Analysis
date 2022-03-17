@@ -1,5 +1,6 @@
 export interface ISchoolData {
     schools: ISchoolDetails[];
+    totallessons: number;
 }
 
 export interface ISchoolDetails {
@@ -8,5 +9,5 @@ export interface ISchoolDetails {
     camp: string;
     country: string;
     school: string;
-    lesson: number;
+    lessons: number;
 }
