@@ -1,6 +1,8 @@
 import React from "react";
 import "./App.css";
 import { SchoolsData } from "./features/schools/schoolsData/schoolsData";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { SchoolsDetails } from "./features/schools/schoolDetails/schoolDetails";
 
 function App() {
   const [darkMode, setDarkMode] = React.useState(getInitialMode());
@@ -34,28 +36,35 @@ function App() {
   }
 
   return (
-    <div className={darkMode ? "dark-mode" : "light-mode"}>
-      <nav>
-        <div className="toggle-container">
-          <span className="title">Analysis Chart</span>
-          <span className="toggle">
-            <input
-              checked={darkMode}
-              onChange={() => setDarkMode((prevMode: any) => !prevMode)}
-              id="checkbox"
-              className="checkbox"
-              type="checkbox"
-            />
-            <label htmlFor="checkbox" />
-          </span>
+    // <div className={darkMode ? "dark-mode" : "light-mode"}>
+    //   <nav>
+    //     <div className="toggle-container">
+    //       <span className="title">Analysis Chart</span>
+    //       <span className="toggle">
+    //         <input
+    //           checked={darkMode}
+    //           onChange={() => setDarkMode((prevMode: any) => !prevMode)}
+    //           id="checkbox"
+    //           className="checkbox"
+    //           type="checkbox"
+    //         />
+    //         <label htmlFor="checkbox" />
+    //       </span>
 
-          {/* <button onClick={() => setDarkMode(prevMode => !prevMode)}>
-          Toggle
-        </button> */}
-        </div>
-      </nav>
+    //       {/* <button onClick={() => setDarkMode(prevMode => !prevMode)}>
+    //       Toggle
+    //     </button> */}
+    //     </div>
+    //   </nav>
 
-      <SchoolsData />
+    //   <SchoolsData />
+    // </div>
+    <div>
+      <Routes>
+        <Route path="/" element={<Navigate replace to="/home" />} />
+        <Route path="/home" element={<SchoolsData />} />
+        <Route path="/schoolDetails" element={<SchoolsDetails />} />
+      </Routes>
     </div>
   );
 }

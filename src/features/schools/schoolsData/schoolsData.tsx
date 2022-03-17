@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./schoolData.css";
 import { useAppSelector, useAppDispatch } from "../../../app/hooks";
-import { IChartData } from "../Interfaces/ISchoolData";
+import { IChartData, ISchoolDetails } from "../Interfaces/ISchoolData";
 import {
     getDataAsync,
     setCountry,
@@ -16,10 +16,14 @@ import CircularProgress from "@mui/material/CircularProgress";
 import MenuItem from "@mui/material/MenuItem";
 import Grid from "@mui/material/Grid";
 import Checkbox from "@mui/material/Checkbox";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import * as Utils from "../../../common/utils";
 import { Line } from "react-chartjs-2";
+import { useNavigate } from "react-router-dom";
+
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -30,8 +34,6 @@ import {
     Tooltip,
     Legend,
 } from "chart.js";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 
 ChartJS.register(
     CategoryScale,
@@ -42,7 +44,6 @@ ChartJS.register(
     Tooltip,
     Legend
 );
-
 
 export function SchoolsData() {
     const dispatch = useAppDispatch();
@@ -141,6 +142,27 @@ export function SchoolsData() {
         handleAddDataToDataSet(schools[1], data);
     };
 
+    const navigate = useNavigate();
+    const lineOptions: any = {
+        onClick: (e: any, element: any) => {
+            if (element.length > 0) {
+                var dataSetIndex = element[0].datasetIndex;
+                if (dataSetIndex >= 0) {
+                    var schoolData: IChartData = { ...chartDataSets[dataSetIndex] };
+                    if (schoolData != undefined) {
+                        var fullSchoolData: any = {
+                            ...filteredData.schools.find(
+                                (item) => item.school == schoolData.school
+                            ),
+                        };
+                        dispatch(setSchoolDetails(fullSchoolData));
+                        navigate("/schoolDetails", { replace: true });
+                    }
+                }
+            }
+        },
+    };
+
     useEffect(() => {
         if (postStatus === "idle") {
             dispatch(getDataAsync());
@@ -233,7 +255,11 @@ export function SchoolsData() {
                         <CardContent>
                             <Grid container spacing={2}>
                                 <Grid item xs={8}>
-                                    <Line datasetIdKey="id" data={chartData} />
+                                    <Line
+                                        datasetIdKey="id"
+                                        data={chartData}
+                                        options={lineOptions}
+                                    />
                                 </Grid>
                                 <Grid item xs={4}>
                                     {selectedSchool == "All" && (
@@ -251,8 +277,10 @@ export function SchoolsData() {
                                         chartDataSets.map((item) => {
                                             return (
                                                 <div
-                                                    className={(!item.checked ? 'unChecked' : '')}
-                                                    key={item.id} style={{ color: item.color }}>
+                                                    className={!item.checked ? "unChecked" : ""}
+                                                    key={item.id}
+                                                    style={{ color: item.color }}
+                                                >
                                                     <Checkbox
                                                         checked={item.checked}
                                                         onChange={(e) => {
