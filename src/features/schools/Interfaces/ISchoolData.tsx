@@ -11,3 +11,18 @@ export interface ISchoolDetails {
     school: string;
     lessons: number;
 }
+
+export interface IChartData {
+    id: number;
+    school: string;
+    lessons: number[];
+    totalLessons: number;
+    checked: boolean;
+    color: string;
+}
+
+export interface IChartDataSet {
+    label?: string;
+    data?: number[];
+    borderColor?: string;
+}

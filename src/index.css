@@ -1,11 +1,13 @@
 body {
+  background-color: #F5F6FA;
+  height: 100%;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
 .light-mode {
-  background-color: #fff;
+  background-color: #F5F6FA;
   color: #333;
   transition: background-color 0.25s ease-out;
 }

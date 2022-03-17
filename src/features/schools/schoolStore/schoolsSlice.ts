@@ -45,7 +45,7 @@ export const schoolsSlice = createSlice({
         state.fullData.schools.filter((item) => item.country == action.payload)
       );
       var schoolsArray = getSchoolsByCamp(
-        state.fullData.schools.filter((item) => item.camp == campsArray[0])
+        state.fullData.schools.filter((item) => item.country == action.payload && item.camp == campsArray[0])
       );
       let filteredSchoolsData = updateFilteredSchool(
         state.fullData.schools,
@@ -64,7 +64,7 @@ export const schoolsSlice = createSlice({
     },
     setCamp: (state, action: PayloadAction<string>) => {
       var schoolsArray = getSchoolsByCamp(
-        state.fullData.schools.filter((item) => item.camp == action.payload)
+        state.fullData.schools.filter((item) => item.country == state.selectedCountry && item.camp == action.payload)
       );
       let filteredSchoolsData = updateFilteredSchool(
         state.fullData.schools,
