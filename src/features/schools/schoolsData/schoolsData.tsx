@@ -81,7 +81,11 @@ export function SchoolsData() {
         datasets: [],
     };
     const [chartData, setChartData] = useState(initchartData);
-    const handleAddDataToDataSet = (schoolName: string, data: any = null) => {
+    const handleAddDataToDataSet = (
+        schoolName: string,
+        data: any = null,
+        clearData: boolean = false
+    ) => {
         if (data == null) data = [...chartDataSets];
         if (schoolName != null) {
             let schoolChartData: IChartData = data.find(
@@ -93,10 +97,17 @@ export function SchoolsData() {
                     data: schoolChartData?.lessons,
                     borderColor: schoolChartData?.color,
                 };
-                setChartData({
-                    ...chartData,
-                    datasets: [...chartData.datasets, dataSet],
-                });
+                if (!clearData) {
+                    setChartData({
+                        ...chartData,
+                        datasets: [...chartData.datasets, dataSet],
+                    });
+                } else {
+                    setChartData({
+                        ...chartData,
+                        datasets: [dataSet],
+                    });
+                }
                 if (schoolChartData != undefined) schoolChartData.checked = true;
                 setChartDataSets(data);
             } else {
@@ -117,28 +128,49 @@ export function SchoolsData() {
 
     var initchartDataSets: IChartData[] = [];
     const [chartDataSets, setChartDataSets] = useState(initchartDataSets);
-    const handleSetChartDataSets = () => {
+    const handleSetChartDataSets = (clearData: boolean = false) => {
         let data: IChartData[] = [];
-        for (let i = 1; i < schools.length; i++) {
+        debugger
+        if (selectedSchool == "All" || selectedSchool == "") {
+            for (let i = 1; i < schools.length; i++) {
+                let currentData: IChartData = {} as IChartData;
+                currentData.id = Math.random() * 1000;
+                currentData.color =
+                    Utils.CHART_COLORS_Array[i % Utils.CHART_COLORS_Array.length];
+                currentData.school = schools[i];
+                currentData.totalLessons = 0;
+                currentData.checked = false;
+                currentData.lessons = Array(12).fill(0);
+                filteredData.schools
+                    .filter((item) => item.school == schools[i])
+                    .forEach((elem) => {
+                        let monthIndex: number = Utils.MONTHS.indexOf(elem.month);
+                        if (monthIndex != -1) currentData.lessons[monthIndex] = elem.lessons;
+                        currentData.totalLessons += elem.lessons;
+                    });
+                data.push(currentData);
+            }
+            handleAddDataToDataSet(schools[1], data, clearData);
+        }
+        else {
             let currentData: IChartData = {} as IChartData;
             currentData.id = Math.random() * 1000;
             currentData.color =
-                Utils.CHART_COLORS_Array[i % Utils.CHART_COLORS_Array.length];
-            currentData.school = schools[i];
+                Utils.CHART_COLORS_Array[1];
+            currentData.school = selectedSchool;
             currentData.totalLessons = 0;
             currentData.checked = false;
             currentData.lessons = Array(12).fill(0);
             filteredData.schools
-                .filter((item) => item.school == schools[i])
+                .filter((item) => item.school == selectedSchool)
                 .forEach((elem) => {
                     let monthIndex: number = Utils.MONTHS.indexOf(elem.month);
                     if (monthIndex != -1) currentData.lessons[monthIndex] = elem.lessons;
                     currentData.totalLessons += elem.lessons;
                 });
             data.push(currentData);
+            handleAddDataToDataSet(selectedSchool, data, clearData);
         }
-        //setChartDataSets(data);
-        handleAddDataToDataSet(schools[1], data);
     };
 
     const navigate = useNavigate();
@@ -173,6 +205,16 @@ export function SchoolsData() {
         }
     }, [postStatus, dispatch]);
 
+    useEffect(() => {
+        debugger
+        handleSetChartDataSets(true);
+    }, [filteredData]);
+
+
+    useEffect(() => {
+        if (camps.length > 0) setSelectedCamp(camps[0]);
+    }, [camps]);
+
     return (
         <div>
             {postStatus === "loading" && <CircularProgress />}
@@ -180,7 +222,7 @@ export function SchoolsData() {
                 <div className="mainDev">
                     <h1 className="coloredHeader">Chart Analysis</h1>
                     <h2 className="coloredHeader">Number of Lessons</h2>
-                    <Grid container spacing={3} className="paddingBottom15" >
+                    <Grid container spacing={3} className="paddingBottom15">
                         <Grid item xs>
                             <div className="form-inline">
                                 <span>Select Country</span>
@@ -264,15 +306,9 @@ export function SchoolsData() {
                                 <Grid item xs={4}>
                                     <div>
                                         <h2>{filteredData.totallessons} Sessions </h2>
-                                        {selectedSchool == "All" && (
-                                            <span>
-                                                in {selectedCamp}{" "}
-                                            </span>
-                                        )}
+                                        {selectedSchool == "All" && <span>in {selectedCamp} </span>}
                                         {selectedSchool != "All" && (
-                                            <span>
-                                                in {selectedSchool}{" "}
-                                            </span>
+                                            <span>in {selectedSchool} </span>
                                         )}
                                     </div>
                                     {chartDataSets &&
