@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./schoolData.css";
 import { useAppSelector, useAppDispatch } from "../../../app/hooks";
-import { IChartData, ISchoolDetails } from "../Interfaces/ISchoolData";
+import { IChartData } from "../Interfaces/ISchoolData";
 import {
     getDataAsync,
     setCountry,

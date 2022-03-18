@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useAppSelector, useAppDispatch } from "../../../app/hooks";
+import React, { useEffect } from "react";
+import { useAppSelector } from "../../../app/hooks";
 import { ISchoolDetails } from "../Interfaces/ISchoolData";
 import FlagIcon from "@mui/icons-material/Flag";
 import HolidayVillageIcon from "@mui/icons-material/HolidayVillage";
@@ -12,14 +12,12 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import { NavLink } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import { Grid } from "@mui/material";
 import "./schoolDetails.css";
 
 export function SchoolsDetails() {
-    const dispatch = useAppDispatch();
     const schoolDetails: ISchoolDetails = useAppSelector(
         (state) => state.schools.selectedSchoolDetails
     );
