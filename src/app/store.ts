@@ -1,10 +1,29 @@
-import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+import {
+  configureStore,
+  ThunkAction,
+  Action,
+  combineReducers,
+} from "@reduxjs/toolkit";
 import schoolReducer from "../features/schools/schoolStore/schoolsSlice";
+import storage from "redux-persist/lib/storage";
+import { persistReducer } from "redux-persist";
+
+const reducers = combineReducers({
+  schools: schoolReducer,
+});
+const persistConfig = {
+  key: "root",
+  storage,
+};
+const persistedReducer = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({
-  reducer: {
-    schools: schoolReducer,
-  },
+  reducer: persistedReducer,
+  devTools: process.env.NODE_ENV !== "production",
+  middleware: getDefaultMiddleware =>
+  getDefaultMiddleware({
+    serializableCheck: false,
+  }),
 });
 
 export type AppDispatch = typeof store.dispatch;
