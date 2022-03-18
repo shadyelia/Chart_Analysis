@@ -5,6 +5,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { SchoolsDetails } from "./features/schools/schoolDetails/schoolDetails";
 import Header from "./features/header/header";
 import Footer from "./features/footer/footer"
+import "./118n";
 
 function App() {
   const [darkMode, setDarkMode] = React.useState(getInitialMode());

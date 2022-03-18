@@ -23,6 +23,7 @@ import Select from "@mui/material/Select";
 import * as Utils from "../../../common/utils";
 import { Line } from "react-chartjs-2";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -45,6 +46,7 @@ ChartJS.register(
 );
 
 export function SchoolsData() {
+    const { t, i18n } = useTranslation();
     const dispatch = useAppDispatch();
     const postStatus = useAppSelector((state) => state.schools.status);
     const filteredData = useAppSelector((state) => state.schools.filteredSchools);
@@ -226,7 +228,7 @@ export function SchoolsData() {
                     <Grid container spacing={3} className="paddingBottom15">
                         <Grid item xs>
                             <div className="form-inline">
-                                <span>Select Country</span>
+                                <span>{t("SELECTCOUNTRY")}</span>
                                 <FormControl sx={{ m: 1, minWidth: 200 }}>
                                     <Select
                                         value={selectedCountry}
