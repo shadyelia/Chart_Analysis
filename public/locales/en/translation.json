@@ -1,11 +1,17 @@
 {
   "HOME": "Home",
   "LESSON": "Lesson",
-  "LESSONS": "Lessons",
+  "LESSONS": "lessons",
   "COUNTRY": "Country",
   "CAMP": "CAMP",
   "SCHOOL": "School",
   "SCHOOLS": "Schools",
   "MONTH":"Month",
-  "SELECTCOUNTRY":"Select Country"
+  "SELECTCOUNTRY":"Select Country",
+  "SELECTCAMP":"Select Camp",
+  "SELECTSCHOOL":"Select School",
+  "CHARTANALYSIS":"Chart Analysis",
+  "NUMBEROFLESSONES":"Number of lessons",
+  "IN":"in",
+  "NOOFLESSONS":"No. of lessons"
 }

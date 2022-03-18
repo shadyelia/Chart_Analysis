@@ -7,5 +7,11 @@
   "SCHOOL": "المدرسة",
   "SCHOOLS": "المدرس",
   "MONTH":"شهر",
-  "SELECTCOUNTRY":"اختار مدينة"
+  "SELECTCOUNTRY":"اختار مدينة",
+  "SELECTCAMP":"اختار معكسر",
+  "SELECTSCHOOL":"اختار مدرسة",
+  "CHARTANALYSIS":"تحليل الرسم البياني",
+  "NUMBEROFLESSONES":"عدد الدروس",
+  "IN":"فى",
+  "NOOFLESSONS":"عدد الدروس"
 }

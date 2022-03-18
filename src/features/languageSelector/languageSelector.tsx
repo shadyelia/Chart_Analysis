@@ -6,10 +6,14 @@ import "./languageSelector.css";
 const LanguageSelector = () => {
     const { t, i18n } = useTranslation();
     const [selectedLanguage, setSelectedLanguage] = useState("en");
-
+    const setPageDirection = (language: any) => {
+        const dir = language == "ar" ? "rtl" : "ltr"
+        document.documentElement.dir = dir
+    }
     const changeLanguage = (lng: any) => {
         setSelectedLanguage(lng);
         i18n.changeLanguage(lng);
+        setPageDirection(lng);
     };
 
     return (

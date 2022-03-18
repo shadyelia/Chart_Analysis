@@ -223,8 +223,8 @@ export function SchoolsData() {
             {postStatus === "loading" && <CircularProgress />}
             {postStatus === "succeeded" && (
                 <div className="mainDev">
-                    <h1 className="coloredHeader">Chart Analysis</h1>
-                    <h2 className="coloredHeader">Number of Lessons</h2>
+                    <h1 className="coloredHeader">{t("CHARTANALYSIS")}</h1>
+                    <h2 className="coloredHeader">{t("NUMBEROFLESSONES")}</h2>
                     <Grid container spacing={3} className="paddingBottom15">
                         <Grid item xs>
                             <div className="form-inline">
@@ -251,7 +251,7 @@ export function SchoolsData() {
 
                         <Grid item xs={4}>
                             <div className="form-inline">
-                                <span>Select Camp</span>
+                                <span>{t("SELECTCAMP")}</span>
                                 <FormControl sx={{ m: 1, minWidth: 200 }}>
                                     <Select
                                         value={selectedCamp}
@@ -274,7 +274,7 @@ export function SchoolsData() {
 
                         <Grid item xs>
                             <div className="form-inline">
-                                <span>Select School</span>
+                                <span>{t("SELECTSCHOOL")}</span>
                                 <FormControl sx={{ m: 1, minWidth: 200 }}>
                                     <Select
                                         value={selectedSchool}
@@ -298,7 +298,7 @@ export function SchoolsData() {
 
                     <Card sx={{ maxWidth: 1800 }}>
                         <CardContent>
-                            <span>No. of lessons</span>
+                            <span>{t("NOOFLESSONS")}</span>
                             <Grid container spacing={2}>
                                 <Grid item xs={8}>
                                     <Line
@@ -313,10 +313,10 @@ export function SchoolsData() {
                                             <span className="sessionNumber">
                                                 {filteredData.totallessons}
                                             </span>{" "}
-                                            lessons{" "}
+                                            {t("LESSONS")}{" "}
                                         </label>
-                                        {selectedSchool == "All" && <span className="totalSpan">in {selectedCamp} </span>}
-                                        {selectedSchool != "All" && <span className="totalSpan">in {selectedSchool} </span>}
+                                        {selectedSchool == "All" && <span className="totalSpan"> {t("IN")} {selectedCamp} </span>}
+                                        {selectedSchool != "All" && <span className="totalSpan"> {t("IN")} {selectedSchool} </span>}
                                     </div>
                                     {chartDataSets &&
                                         chartDataSets.length > 0 &&
@@ -341,9 +341,9 @@ export function SchoolsData() {
                                                         <span className="sessionNumber">
                                                             {item.totalLessons}
                                                         </span>{" "}
-                                                        lessons
+                                                        {t("LESSONS")}{" "}
                                                     </label>
-                                                    <span className="sessionSpan">in {item.school}</span>
+                                                    <span className="sessionSpan"> {t("IN")} {item.school}</span>
                                                 </div>
                                             );
                                         })}
