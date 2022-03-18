@@ -16,8 +16,10 @@ import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import { Grid } from "@mui/material";
 import "./schoolDetails.css";
+import { useTranslation } from "react-i18next";
 
 export function SchoolsDetails() {
+    const { t, i18n } = useTranslation();
     const schoolDetails: ISchoolDetails = useAppSelector(
         (state) => state.schools.selectedSchoolDetails
     );
@@ -46,19 +48,19 @@ export function SchoolsDetails() {
                 />
                 <CardContent>
                     <div>
-                        <FlagIcon /> Country : {schoolDetails.country}
+                        <FlagIcon /> {t("COUNTRY")} : {schoolDetails.country}
                     </div>
                     <div>
-                        <HolidayVillageIcon /> Camp : {schoolDetails.camp}
+                        <HolidayVillageIcon /> {t("CAMP")} : {schoolDetails.camp}
                     </div>
                     <div>
-                        <SchoolIcon /> School : {schoolDetails.school}
+                        <SchoolIcon /> {t("SCHOOL")} : {schoolDetails.school}
                     </div>
                     <div>
-                        <CalendarMonthIcon /> Month : {schoolDetails.month}
+                        <CalendarMonthIcon /> {t("MONTH")} : {schoolDetails.month}
                     </div>
                     <div>
-                        <PlayLessonIcon /> Lessons : {schoolDetails.lessons}
+                        <PlayLessonIcon /> {t("LESSONS")} : {schoolDetails.lessons}
                     </div>
                 </CardContent>
                 <CardActions>

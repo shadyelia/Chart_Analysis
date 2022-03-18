@@ -200,7 +200,7 @@ export function SchoolsData() {
     };
 
     useEffect(() => {
-        if (postStatus === "idle") {
+        if (postStatus === "idle" && filteredData) {
             dispatch(getDataAsync());
         } else if (postStatus === "succeeded") {
             if (selectedCountry == "") setSelectedCountry(countries[0]);
