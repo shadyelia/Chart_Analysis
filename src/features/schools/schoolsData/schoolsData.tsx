@@ -96,6 +96,10 @@ export function SchoolsData() {
                     label: schoolChartData?.school,
                     data: schoolChartData?.lessons,
                     borderColor: schoolChartData?.color,
+                    pointStyle: 'circle',
+                    pointRadius: 6,
+                    pointHoverRadius: 6,
+                    pointBackgroundColor: 'rgba(255,255,255, 0.9)'
                 };
                 if (!clearData) {
                     setChartData({
@@ -130,7 +134,6 @@ export function SchoolsData() {
     const [chartDataSets, setChartDataSets] = useState(initchartDataSets);
     const handleSetChartDataSets = (clearData: boolean = false) => {
         let data: IChartData[] = [];
-        debugger
         if (selectedSchool == "All" || selectedSchool == "") {
             for (let i = 1; i < schools.length; i++) {
                 let currentData: IChartData = {} as IChartData;
@@ -145,18 +148,17 @@ export function SchoolsData() {
                     .filter((item) => item.school == schools[i])
                     .forEach((elem) => {
                         let monthIndex: number = Utils.MONTHS.indexOf(elem.month);
-                        if (monthIndex != -1) currentData.lessons[monthIndex] = elem.lessons;
+                        if (monthIndex != -1)
+                            currentData.lessons[monthIndex] = elem.lessons;
                         currentData.totalLessons += elem.lessons;
                     });
                 data.push(currentData);
             }
             handleAddDataToDataSet(schools[1], data, clearData);
-        }
-        else {
+        } else {
             let currentData: IChartData = {} as IChartData;
             currentData.id = Math.random() * 1000;
-            currentData.color =
-                Utils.CHART_COLORS_Array[1];
+            currentData.color = Utils.CHART_COLORS_Array[1];
             currentData.school = selectedSchool;
             currentData.totalLessons = 0;
             currentData.checked = false;
@@ -192,6 +194,7 @@ export function SchoolsData() {
                 }
             }
         },
+
     };
 
     useEffect(() => {
@@ -206,10 +209,8 @@ export function SchoolsData() {
     }, [postStatus, dispatch]);
 
     useEffect(() => {
-        debugger
         handleSetChartDataSets(true);
     }, [filteredData]);
-
 
     useEffect(() => {
         if (camps.length > 0) setSelectedCamp(camps[0]);
@@ -304,8 +305,13 @@ export function SchoolsData() {
                                     />
                                 </Grid>
                                 <Grid item xs={4}>
-                                    <div>
-                                        <h2>{filteredData.totallessons} Sessions </h2>
+                                    <div className="sessionDev">
+                                        <h2>
+                                            <span className="sessionNumber">
+                                                {filteredData.totallessons}
+                                            </span>{" "}
+                                            Sessions{" "}
+                                        </h2>
                                         {selectedSchool == "All" && <span>in {selectedCamp} </span>}
                                         {selectedSchool != "All" && (
                                             <span>in {selectedSchool} </span>
@@ -316,7 +322,9 @@ export function SchoolsData() {
                                         chartDataSets.map((item) => {
                                             return (
                                                 <div
-                                                    className={!item.checked ? "unChecked" : ""}
+                                                    className={
+                                                        "sessionDev " + (item.checked ? "" : "unChecked")
+                                                    }
                                                     key={item.id}
                                                     style={{ color: item.color }}
                                                 >
@@ -328,7 +336,13 @@ export function SchoolsData() {
                                                         value={item.school}
                                                         inputProps={{ "aria-label": "controlled" }}
                                                     />
-                                                    {item.totalLessons} in {item.school}
+                                                    <label className="sessionLabel">
+                                                        <span className="sessionNumber">
+                                                            {item.totalLessons}
+                                                        </span>{" "}
+                                                        Lessons
+                                                    </label>
+                                                    <span className="sessionSpan">in {item.school}</span>
                                                 </div>
                                             );
                                         })}

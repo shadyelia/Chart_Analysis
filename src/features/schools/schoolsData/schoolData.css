@@ -20,6 +20,24 @@ label {
   opacity: 0.35;
 }
 
-.paddingBottom15{
+.paddingBottom15 {
   padding-bottom: 15px;
+}
+
+.sessionDev{
+  padding: inherit;
+  padding-bottom: 10px;
+}
+
+.sessionLabel {
+  font-size: x-large;
+}
+
+.sessionSpan {
+  display: block;
+  padding-left: 42px;
+}
+
+.sessionNumber{
+  font-weight: bold;
 }
