@@ -229,11 +229,11 @@ export function SchoolsData() {
                                 <span>Select Country</span>
                                 <FormControl sx={{ m: 1, minWidth: 200 }}>
                                     <Select
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
                                         value={selectedCountry}
                                         label="country"
                                         onChange={handleSetSelectedCountry}
+                                        displayEmpty
+                                        inputProps={{ 'aria-label': 'Without label' }}
                                     >
                                         {countries.map((country: string) => {
                                             return (
@@ -252,11 +252,11 @@ export function SchoolsData() {
                                 <span>Select Camp</span>
                                 <FormControl sx={{ m: 1, minWidth: 200 }}>
                                     <Select
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
                                         value={selectedCamp}
                                         label="country"
                                         onChange={handleSetSelectedCamp}
+                                        displayEmpty
+                                        inputProps={{ 'aria-label': 'Without label' }}
                                     >
                                         {camps.map((camp: string) => {
                                             return (
@@ -275,11 +275,11 @@ export function SchoolsData() {
                                 <span>Select School</span>
                                 <FormControl sx={{ m: 1, minWidth: 200 }}>
                                     <Select
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
                                         value={selectedSchool}
                                         label="country"
                                         onChange={handleSetSelectedSchool}
+                                        displayEmpty
+                                        inputProps={{ 'aria-label': 'Without label' }}
                                     >
                                         {schools.map((school: string) => {
                                             return (
@@ -296,6 +296,7 @@ export function SchoolsData() {
 
                     <Card sx={{ maxWidth: 1800 }}>
                         <CardContent>
+                            <span>No. of lessons</span>
                             <Grid container spacing={2}>
                                 <Grid item xs={8}>
                                     <Line
@@ -306,16 +307,14 @@ export function SchoolsData() {
                                 </Grid>
                                 <Grid item xs={4}>
                                     <div className="sessionDev">
-                                        <h2>
+                                        <label className="sessionLabel">
                                             <span className="sessionNumber">
                                                 {filteredData.totallessons}
                                             </span>{" "}
-                                            Sessions{" "}
-                                        </h2>
-                                        {selectedSchool == "All" && <span>in {selectedCamp} </span>}
-                                        {selectedSchool != "All" && (
-                                            <span>in {selectedSchool} </span>
-                                        )}
+                                            lessons{" "}
+                                        </label>
+                                        {selectedSchool == "All" && <span className="totalSpan">in {selectedCamp} </span>}
+                                        {selectedSchool != "All" && <span className="totalSpan">in {selectedSchool} </span>}
                                     </div>
                                     {chartDataSets &&
                                         chartDataSets.length > 0 &&
@@ -340,7 +339,7 @@ export function SchoolsData() {
                                                         <span className="sessionNumber">
                                                             {item.totalLessons}
                                                         </span>{" "}
-                                                        Lessons
+                                                        lessons
                                                     </label>
                                                     <span className="sessionSpan">in {item.school}</span>
                                                 </div>

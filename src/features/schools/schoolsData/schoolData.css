@@ -38,6 +38,11 @@ label {
   padding-left: 42px;
 }
 
+.totalSpan {
+  display: block;
+  padding-left: 2px;
+}
+
 .sessionNumber{
   font-weight: bold;
 }
