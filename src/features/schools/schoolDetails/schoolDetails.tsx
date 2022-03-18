@@ -12,8 +12,6 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import Box from "@mui/material/Box";
-import Link from "@mui/material/Link";
 import { Grid } from "@mui/material";
 import "./schoolDetails.css";
 import { useTranslation } from "react-i18next";
@@ -23,6 +21,9 @@ export function SchoolsDetails() {
     const schoolDetails: ISchoolDetails = useAppSelector(
         (state) => state.schools.selectedSchoolDetails
     );
+    const handleClick = () => {
+        navigate("/home", { replace: true });
+    };
     const navigate = useNavigate();
     useEffect(() => {
         if (schoolDetails === undefined) {
@@ -64,12 +65,8 @@ export function SchoolsDetails() {
                     </div>
                 </CardContent>
                 <CardActions>
-                    <Button size="small">
-                        <Box>
-                            <Link href="/home" color="inherit">
-                                Back
-                            </Link>
-                        </Box>
+                    <Button size="small" onClick={handleClick}>
+                        {t("BACK")}
                     </Button>
                 </CardActions>
             </Card>
