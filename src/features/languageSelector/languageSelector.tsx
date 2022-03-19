@@ -1,20 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Button from "@mui/material/Button";
 import "./languageSelector.css";
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import { getLanguage, setLanguage } from "../header/headerSlice";
 
 const LanguageSelector = () => {
-    const { t, i18n } = useTranslation();
-    const [selectedLanguage, setSelectedLanguage] = useState("en");
+    const dispatch = useAppDispatch();
+    const { i18n } = useTranslation();
+    const [selectedLanguage, setSelectedLanguage] = useState(
+        useAppSelector(getLanguage)
+    );
     const setPageDirection = (language: any) => {
-        const dir = language == "ar" ? "rtl" : "ltr"
-        document.documentElement.dir = dir
-    }
+        const dir = language == "ar" ? "rtl" : "ltr";
+        document.documentElement.dir = dir;
+    };
     const changeLanguage = (lng: any) => {
         setSelectedLanguage(lng);
-        i18n.changeLanguage(lng);
-        setPageDirection(lng);
     };
+
+    useEffect(() => {
+        if (selectedLanguage != "") {
+            dispatch(setLanguage(selectedLanguage));
+            i18n.changeLanguage(selectedLanguage);
+            setPageDirection(selectedLanguage);
+        }
+    }, [selectedLanguage]);
 
     return (
         <div onChange={changeLanguage}>

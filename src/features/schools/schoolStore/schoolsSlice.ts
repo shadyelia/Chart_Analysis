@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState, AppThunk } from "../../../app/store";
+import { RootState } from "../../../app/store";
 import { fetchData } from "./schoolsAPI";
 import { ISchoolData, ISchoolDetails } from "../Interfaces/ISchoolData";
 
-export interface CounterState {
+export interface ISchoolDataState {
   fullData: ISchoolData;
   filteredSchools: ISchoolData;
   selectedSchoolDetails: ISchoolDetails;
@@ -16,7 +16,7 @@ export interface CounterState {
   status: "idle" | "loading" | "succeeded" | "failed";
 }
 
-const initialState: CounterState = {
+const initialState: ISchoolDataState = {
   fullData: {} as ISchoolData,
   filteredSchools: { schools: [], totallessons: 0 } as ISchoolData,
   selectedSchoolDetails: {} as ISchoolDetails,

@@ -46,7 +46,7 @@ ChartJS.register(
 );
 
 export function SchoolsData() {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const dispatch = useAppDispatch();
     const postStatus = useAppSelector((state) => state.schools.status);
     const filteredData = useAppSelector((state) => state.schools.filteredSchools);
